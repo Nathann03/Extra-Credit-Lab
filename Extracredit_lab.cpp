@@ -67,9 +67,7 @@ public:
 		deleteTree(node->left);
 		deleteTree(node->right);
 
-		if (node != root) {
-			delete node;
-		}
+		delete node;
 	}
 
 	// in order tree traversal array
@@ -224,69 +222,101 @@ public:
 	}
 };
 
-int main() {
+void BST_test_program() {
 	BST* tree = new BST();
-	tree->insert(5);
-	tree->insert(3);
-	tree->insert(7);
-	tree->insert(2);
-	tree->insert(4);
-	tree->insert(6);
-	tree->insert(8);
+	
+	// ask user how many numbers to insert
+	int num;
+	std::cout << "How many numbers to insert? ";
+	std::cin >> num;
+	
+	// insert numbers
+	for (int i = 0; i < num; i++) {
+		int val;
+		std::cout << "Enter number: ";
+		std::cin >> val;
+		tree->insert(val);
+	}
+	
+	// print tree
+	std::cout << "Current Tree: " << std::endl;
 	tree->print2D(tree->root);
-	std::cout << "size: " << tree->size(tree->root) << std::endl;
-	std::cout << std::endl;
-	std::vector<int> order;
 	
-	tree->inOrder(tree->root, order);
-	for (int i : order) {
-		std::cout << i << ' ';
+	
+	bool deleted = false;
+	// ask user what functions to call on tree
+	
+	std::cout << "What function to call? (1: deleteTree, 2: inOrder, 3: reverseInOrder, 4: insert, 5: remove, 6: print tree , 7: exit) ";
+	int choice;
+	std::cin >> choice;
+	while (choice != 7) {
+		if (choice == 1) {
+			tree->deleteTree(tree->root);
+			std::cout << "\nTree deleted (Note: breaks out of function call loop!)" << std::endl;
+			deleted = true;
+			break;
+		}
+		else if (choice == 2) {
+			std::vector<int> arr;
+			tree->inOrder(tree->root, arr);
+			std::cout << "\nIn order traversal: ";
+			for (int i = 0; i < arr.size(); i++) {
+				std::cout << arr[i] << " ";
+			}
+			std::cout << std::endl;
+		}
+		else if (choice == 3) {
+			std::vector<int> arr;
+			tree->reverseInOrder(tree->root, arr);
+			std::cout << "\nReverse in order traversal: ";
+			for (int i = 0; i < arr.size(); i++) {
+				std::cout << arr[i] << " ";
+			}
+			std::cout << std::endl;
+		}
+		else if (choice == 4) {
+			int val;
+			std::cout << "\nEnter number to insert: ";
+			std::cin >> val;
+			tree->insert(val);
+			std::cout << "\nNumber inserted" << std::endl;
+		}
+		else if (choice == 5) {
+			int val;
+			std::cout << "\nEnter number to remove: ";
+			std::cin >> val;
+			tree->remove(val);
+			std::cout << "\nNumber removed" << std::endl;
+		}
+		else if (choice == 6) {
+			tree->print2D(tree->root);
+		}
+		else {
+			std::cout << "\nInvalid choice" << std::endl;
+		}
+		std::cout << "\nWhat function to call? (1: deleteTree, 2: inOrder, 3: reverseInOrder, 4: insert, 5: remove, 6: print tree , 7: exit) ";
+		std::cin >> choice;
 	}
-	std::cout << std::endl;
-
-	std::vector<int> revOrder;
-	tree->reverseInOrder(tree->root, revOrder);
-	for (int i : revOrder) {
-		std::cout << i << ' ';
+	
+	// call destructor to delete root.
+	if (not(deleted)) {
+		delete tree;
 	}
 	
-	
-	//find 8 in tree
-	Node* found = tree->find(8);
-	
-	std::cout << std::endl << "Node Found Value: " << found->val;
-	
-	tree->deleteTree(tree->root);
-	
-
-	// Nothing is outputted therefore no memory leaks
+	std::cout << "\nProgram ended, if memory leaks: crtdump command called after this will display" << std::endl;
 	_CrtDumpMemoryLeaks();
 	
 	
-	//tree->remove(5);
-	//tree->print2D(tree->root);
-	//std::cout << "size: " << tree->size(tree->root) << std::endl;
-	//std::cout << std::endl;
-	//tree->remove(3);
-	//tree->print2D(tree->root);
-	//std::cout << "size: " << tree->size(tree->root) << std::endl;
-	//std::cout << std::endl;
-	//tree->remove(7);
-	//tree->print2D(tree->root);
-	//std::cout << "size: " << tree->size(tree->root) << std::endl;
-	//std::cout << std::endl;
-	//tree->remove(2);
-	//tree->print2D(tree->root);
-	//std::cout << "size: " << tree->size(tree->root) << std::endl;
-	//std::cout << std::endl;
-	//tree->remove(4);
-	//tree->print2D(tree->root);
-	//std::cout << "size: " << tree->size(tree->root) << std::endl;
-	//std::cout << std::endl;
-	//tree->remove(6);
-	//tree->print2D(tree->root);
-	//std::cout << "size: " << tree->size(tree->root) << std::endl;
-	//std::cout << std::endl;
+	
+	
+	
+	
+	
+}
+
+int main() {
+	
+	BST_test_program();
 
 }
 
